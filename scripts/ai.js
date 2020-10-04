@@ -111,6 +111,63 @@ ai.takeShot(1,2)
 
         if(this.difficulty==2){
             //set orthogonal fire once it hits
+         let hitFound=false;
+         
+         
+            while(hitFound!=true){
+
+                let col = Math.floor((Math.random()*8)+0);
+                let row= Math.floor((Math.random()*8)+0);
+                let tempCol=col;
+                let tempRow=row;   
+             
+                if(Enemy.boatBoard.hasBeenHit[row][col]!=true){
+                    Enemy.boatBoard.hasBeenHit[row][col]=true;
+                    if(Enemy.boatBoard.isAHit(col,row)){
+                 
+                     //after hit is found, checks for spaces to the left
+                     tempCol+1;
+                      while(Enemy.boatBoard.isAHit(tempCol,row))
+                      {
+                      Enemy.boatBoard.hasBeenHit[row][tempCol]=true;
+                      Enemy.hitBoard.hit[row][tempCol]=true;
+                      tempCol+1;
+                      }
+                     
+                     //then it checks for spaces to the right of hit
+                     tempCol=col-1;
+                      while(Enemy.boatBoard.isAHit(tempCol,row))
+                      {
+                      Enemy.boatBoard.hasBeenHit[row][tempCol]=true;
+                      Enemy.hitBoard.hit[row][tempCol]=true;
+                      tempCol-1;
+                      }
+                     
+                     //checks for spaces above hit
+                     tempRow=row+1;
+                      while(Enemy.boatBoard.isAHit(col,tempRow))
+                      {
+                      Enemy.boatBoard.hasBeenHit[tempRow][col]=true;
+                      Enemy.hitBoard.hit[tempRow][col]=true;
+                      tempRow+1;
+                      }
+                     
+                     //checks for spaces below hit
+                     tempRow=row-1;
+                     
+                      while(Enemy.boatBoard.isAHit(col,tempRow))
+                      {
+                      Enemy.boatBoard.hasBeenHit[tempRow][col]=true;
+                      Enemy.hitBoard.hit[tempRow][col]=true;
+                      tempRow-1;
+                      }                  
+                    }  
+                    Enemy.hitBoard.hit[row][col]=true;
+                    hitFound=true;
+                  }
+                }         
+         
+         
 
         }
 
@@ -124,7 +181,7 @@ ai.takeShot(1,2)
 
                 if(Enemy.boatBoard.hasBeenHit[row][col]!=true){
                     //in isAHit col and row are flipped since that's how it used for p1 and p2 in application.js
-                    if(Enemy.boatBoard.isAHit(col,row)){
+                    if(Enemy.boatBoard.isAHit(col,row){
                         Enemy.boatBoard.hasBeenHit[row][col]=true;
 
                         Enemy.hitBoard.hit[row][col]=true;
